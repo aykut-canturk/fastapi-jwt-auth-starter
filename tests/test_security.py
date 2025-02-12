@@ -1,7 +1,5 @@
 import unittest
 from unittest.mock import patch, AsyncMock
-from datetime import datetime, timedelta, UTC
-
 from fastapi import HTTPException
 import jwt
 
@@ -19,6 +17,7 @@ from app.security import (
 )
 from app.models.user import Users
 from app.config import jwt_settings
+
 
 class TestSecurity(unittest.IsolatedAsyncioTestCase):
 
@@ -66,14 +65,22 @@ class TestSecurity(unittest.IsolatedAsyncioTestCase):
     def test_create_jwt_token_access(self):
         user = Users(id=1, email="test@example.com")
         token = _create_jwt_token(user, "access")
-        payload = jwt.decode(token, jwt_settings.authjwt_secret_key, algorithms=[jwt_settings.authjwt_algorithm])
+        payload = jwt.decode(
+            token,
+            jwt_settings.authjwt_secret_key,
+            algorithms=[jwt_settings.authjwt_algorithm],
+        )
         self.assertEqual(payload["sub"], "1")
         self.assertEqual(payload["type"], "access")
 
     def test_create_jwt_token_refresh(self):
         user = Users(id=1, email="test@example.com")
         token = _create_jwt_token(user, "refresh")
-        payload = jwt.decode(token, jwt_settings.authjwt_secret_key, algorithms=[jwt_settings.authjwt_algorithm])
+        payload = jwt.decode(
+            token,
+            jwt_settings.authjwt_secret_key,
+            algorithms=[jwt_settings.authjwt_algorithm],
+        )
         self.assertEqual(payload["sub"], "1")
         self.assertEqual(payload["type"], "refresh")
 
@@ -111,6 +118,7 @@ class TestSecurity(unittest.IsolatedAsyncioTestCase):
         token = "invalid.token.here"
         await set_current_user_id(token)
         self.assertIsNone(get_current_user_id())
+
 
 if __name__ == "__main__":
     unittest.main()

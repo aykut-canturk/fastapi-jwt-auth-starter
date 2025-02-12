@@ -50,6 +50,16 @@ This project is a starter template for building a FastAPI application with JWT-b
 
 3. Open your browser and navigate to `http://127.0.0.1:8000/docs` to access the Swagger UI.
 
+## Running the Tests
+
+To run the tests, use the following command:
+
+```bash
+python -m unittest discover -s tests
+```
+
+Make sure you have `unittest` installed. It is included in the Python standard library, so no additional installation is required.
+
 ## Project Structure
 
 ```

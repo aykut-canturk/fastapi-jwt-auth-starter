@@ -1,4 +1,4 @@
-# FastAPI JWT Auth Starter
+# FastAPI JWT Auth Starter 🚀
 
 This project is a starter template for building a FastAPI application with JWT-based authentication.
 

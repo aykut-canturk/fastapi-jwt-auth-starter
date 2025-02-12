@@ -63,43 +63,25 @@ Make sure you have `unittest` installed. It is included in the Python standard l
 ## Project Structure
 
 ```
-/fastapi-jwt-auth-starter/
-├── app
-│   ├── config.py
-│   ├── models
-│   │   ├── __init__.py
-│   │   ├── base.py
-│   │   ├── database.py
-│   │   └── user.py
-│   ├── routes
-│   │   ├── __init__.py
-│   │   ├── auth.py
-│   │   └── user.py
-│   ├── schemas
-│   │   ├── base.py
-│   │   └── user.py
-│   ├── security.py
-│   ├── services
-│   │   ├── base.py
-│   │   └── user.py
-│   └── utils
-│       ├── crypto.py
-│       ├── exception.py
-│       ├── logger.py
-│       └── starter.py
-├── data
-│   └── database.db
-├── docker-compose.yml
-├── logs
-│   └── application.log
-├── requirements.txt
-└── run.py
-├── .gitignore
-├── requirements.txt
-├── Dockerfile
-├── LICENSE
-├── README.md
-
+fastapi-jwt-auth-starter/
+├── app/                    # Application source code
+│   ├── config.py
+│   ├── models/             # Data models
+│   ├── routes/             # API routes
+│   ├── schemas/            # Request/response schemas
+│   ├── security.py
+│   ├── services/           # Business logic
+│   └── utils/              # Utility functions
+├── data/                   # Database and other data files
+├── logs/                   # Application log files
+├── tests/                  # Test files
+├── run.py                  # Application entry point
+├── Dockerfile              # Docker configuration
+├── docker-compose.yml      # Docker Compose configuration
+├── requirements.txt        # Python dependencies
+├── .gitignore              # Files to be ignored by Git
+├── LICENSE                 # License information
+└── README.md               # Project documentation
 ```
 
 ## Contributing

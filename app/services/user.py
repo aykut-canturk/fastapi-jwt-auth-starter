@@ -22,17 +22,18 @@ class UserService(BaseService[Users]):
         log_info(f"Generated password: {password}")
         return password
 
-    def _get_password_hash(self, model: Users) -> str:
-        if not model.password:
+    def _set_password_hash(self, model: Users) -> str:
+        clean_password = model.password
+        if not clean_password:
             log_info(f"Generating password for {model.email}")
-            model.password = self._geneate_password()
-        return hash_password(model.password)
+            clean_password = self._geneate_password()
+        model.password = hash_password(clean_password)
 
     def create(self, model: Users, commit=True):
         existing_user = self.get_by_email(model.email)
         if existing_user:
             raise ValidationError("User with this email already exists.")
-        model.password = self._get_password_hash(model)
+        self._set_password_hash(model)
         return super().create(model, commit)
 
     def delete(self, model, commit=True):
@@ -44,7 +45,16 @@ class UserService(BaseService[Users]):
 
     def login(self, email: str, password: str) -> Users | None:
         user = self.get_by_email(email)
-        return user if user and verify_password(password, user.password) else None
+        if not user:
+            log_info(f"User not found with email: {email}")
+            return None
+        
+        if verify_password(password, user.password):
+            log_info(f"Login successful for user: {email}")
+            return user
+        
+        log_info(f"Invalid password for user: {email}")
+        return None
 
 
 def get_user_service(session: Session = Depends(get_session)) -> UserService:
